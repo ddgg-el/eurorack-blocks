@@ -2,7 +2,7 @@
 
 This repository allows you to setup the `erbb` toolchain in MingGW.
 
-As for today it has been tested only to run simulation on VCVRack and it DOES have some system dependencies, i.e. deleting the eurorack-folder will not actually delete everything.
+As for today it has been tested only to run simulation on VCVRack and it DOES have some system dependencies, i.e. deleting the eurorack-block folder will not actually delete everything.
 
 These dependecies are:
 
