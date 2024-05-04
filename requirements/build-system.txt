@@ -4,7 +4,7 @@
 
 cairocffi>=1.4.0,<1.5.0
 CairoSVG>=2.6.0
-freetype-py>=2.4.0
+# freetype-py>=2.4.0
 
 # DXF generation
 
@@ -16,8 +16,8 @@ svg2mod>=1.2
 
 # AudioSample generation
 
-SoundFile>=0.12.1
-numpy>=1.21.0
+# SoundFile>=0.12.1
+#numpy>=1.21.0
 
 # Display Format
 

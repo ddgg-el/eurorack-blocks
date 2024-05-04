@@ -14,6 +14,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import sysconfig
 import time
 
 PATH_THIS = os.path.abspath (os.path.dirname (__file__))
@@ -34,7 +35,10 @@ if platform.system () == 'Darwin':
    GDB_CMD = os.path.join (PATH_TOOLCHAIN, 'gcc-arm-none-eabi-10.3-2021.10', 'bin', 'arm-none-eabi-gdb')
 
 elif platform.system () == 'Windows':
-   MAKE_CMD = os.path.join (PATH_TOOLCHAIN, 'msys2_mingw64', 'bin', 'mingw32-make.exe')
+   if 'mingw' not in sysconfig.get_platform():
+      MAKE_CMD = os.path.join (PATH_TOOLCHAIN, 'msys2_mingw64', 'bin', 'mingw32-make.exe')
+   else:
+      MAKE_CMD = 'make'
    DFU_CMD = os.path.join (PATH_TOOLCHAIN, 'msys2_mingw64', 'bin', 'dfu-util.exe')
    OPENOCD_CMD = os.path.join (PATH_TOOLCHAIN, 'msys2_mingw64', 'bin', 'openocd.exe')
    OPENOCD_SCRIPTS = os.path.join (PATH_TOOLCHAIN, 'msys2_mingw64', 'share', 'openocd', 'scripts')
@@ -616,8 +620,11 @@ def build_simulator_make_target (target, path, configuration):
       '--directory=%s' % os.path.join (path_artifacts, 'simulator'),
       'install'
    ]
-
-   subprocess.check_call (cmd)
+   try:
+      subprocess.check_call (cmd)
+   except subprocess.CalledProcessError as e:
+      print(e)
+      sys.exit(2)
 
 
 

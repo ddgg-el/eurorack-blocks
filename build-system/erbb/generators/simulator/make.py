@@ -70,7 +70,7 @@ class Make:
 
       template = template.replace ('%module.name%', module.name)
       template = template.replace ('%define_PATH_ROOT%', 'PATH_ROOT ?= %s' % path_root.replace ('\\', '/'))
-      template = template.replace ('%define_RACK_DIR%', 'RACK_DIR ?= %s' % path_rack_dir.replace ('\\', '/'))
+      template = template.replace ('%define_RACK_DIR%', 'RACK_DIR = %s' % path_rack_dir.replace ('\\', '/'))
       template = template.replace ('%define_ARCH%', arch)
       template = template.replace ('%define_CXX%', cxx)
       template = self.replace_warnings (template, strict)

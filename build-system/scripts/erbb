@@ -69,7 +69,7 @@ def read_erbb_ast (filepath):
    try:
       file = open (filepath, 'r', encoding='utf-8')
    except IOError as e:
-      print ("\033[91mfatal error:\033[0m Unable to open for read '%s' file: %s" % (args.input, e.strerror))
+      print ("\033[91mfatal error:\033[0m Unable to open for read '%s' file: %s" % (file.input, e.strerror))
       sys.exit (1)
 
    with file:
@@ -97,7 +97,7 @@ def read_erbui_ast (filepath):
    try:
       file = open (filepath, 'r', encoding='utf-8')
    except IOError as e:
-      print ("\033[91mfatal error:\033[0m Unable to open for read '%s' file: %s" % (args.input, e.strerror))
+      print ("\033[91mfatal error:\033[0m Unable to open for read '%s' file: %s" % (file.input, e.strerror))
       sys.exit (1)
 
    with file:
@@ -164,9 +164,9 @@ def setup (args):
    setup.check_environment ()
 
    PATH_TOOLCHAIN = os.path.abspath (os.path.join (PATH_ROOT, 'build-system', 'toolchain'))
-   if os.path.exists (PATH_TOOLCHAIN):
-      shutil.rmtree (PATH_TOOLCHAIN)
-   os.makedirs (PATH_TOOLCHAIN)
+   if not os.path.exists (PATH_TOOLCHAIN):
+      # shutil.rmtree (PATH_TOOLCHAIN)
+      os.makedirs (PATH_TOOLCHAIN)
 
    if platform.system () == 'Darwin':
       setup.install_kicad_macos ()
@@ -184,9 +184,9 @@ def setup (args):
          subprocess.check_call ('sudo apt-get install -y kicad gcc-arm-none-eabi libglu1-mesa-dev libcairo2-dev libffi-dev python3-dev kicad dfu-util openocd', shell=True)
 
    elif platform.system () == 'Windows':
-      setup.install_msys2_mingw64 ()
-      setup.install_kicad_windows ()
-      setup.install_gnu_arm_embedded_windows ()
+      setup.install_msys2_mingw64 (PATH_TOOLCHAIN)
+      setup.install_kicad_windows (PATH_TOOLCHAIN)
+      setup.install_gnu_arm_embedded_windows (PATH_TOOLCHAIN)
       if args.with_max_support:
          setup.install_max_package ()
 

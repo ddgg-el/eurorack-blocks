@@ -172,17 +172,20 @@ Name: install_kicad_windows
 ==============================================================================
 """
 
-def install_kicad_windows ():
+def install_kicad_windows (toolchain_folder):
    name = 'kicad_minimal_windows_6.0.11-0.tar.gz'
-   download (
-      'https://github.com/ohmtech-rdi/erb-toolchain-windows-kicad-6/releases/download/v0.1/%s' % name,
-      name
-   )
+   kicad_path = os.path.join(toolchain_folder, name)
+   if not os.path.exists(kicad_path):
+      download (
+         'https://github.com/ohmtech-rdi/erb-toolchain-windows-kicad-6/releases/download/v0.1/%s' % name,
+         name
+      )
 
-   print ('Extracting %s...            ' % name)
-   with tarfile.open (os.path.join (PATH_TOOLCHAIN, name), mode='r:gz') as tf:
-      tf.extractall (PATH_TOOLCHAIN)
-
+      print ('Extracting %s...            ' % name)
+      with tarfile.open (os.path.join (PATH_TOOLCHAIN, name), mode='r:gz') as tf:
+         tf.extractall (PATH_TOOLCHAIN)
+   else:
+      print ('KiCad already downloaded...skipping')
 
 
 """
@@ -322,17 +325,20 @@ Name: install_msys2_mingw64
 ==============================================================================
 """
 
-def install_msys2_mingw64 ():
+def install_msys2_mingw64 (toolchain_folder):
    name = 'msys2_mingw64.zip'
-   download (
-      'https://github.com/ohmtech-rdi/erb-toolchain-msys2-mingw64/releases/download/v0.3/%s' % name,
-      name
-   )
+   mingw64_toolchain_path = os.path.join(toolchain_folder, name)
+   if not os.path.exists(mingw64_toolchain_path):
+      download (
+         'https://github.com/ohmtech-rdi/erb-toolchain-msys2-mingw64/releases/download/v0.3/%s' % name,
+         name
+      )
 
-   print ('Extracting %s...            ' % name)
-   with zipfile.ZipFile (os.path.join (PATH_TOOLCHAIN, name), 'r') as zip_ref:
-      zip_ref.extractall (os.path.join (PATH_TOOLCHAIN))
-
+      print ('Extracting %s...            ' % name)
+      with zipfile.ZipFile (os.path.join (PATH_TOOLCHAIN, name), 'r') as zip_ref:
+         zip_ref.extractall (os.path.join (PATH_TOOLCHAIN))
+   else:
+      print ('MinGW64 Toolchain already downloaded...skipping')
 
 
 """
@@ -360,17 +366,20 @@ Name: install_gnu_arm_embedded_windows
 ==============================================================================
 """
 
-def install_gnu_arm_embedded_windows ():
+def install_gnu_arm_embedded_windows (toolchain_folder):
    name = 'gcc-arm-none-eabi-10.3-2021.10-win32.zip'
-   download (
-      'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/%s' % name,
-      name
-   )
+   gcc_arm_path = os.path.join(toolchain_folder, name)
+   if not os.path.exists(gcc_arm_path):
+      download (
+         'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/%s' % name,
+         name
+      )
 
-   print ('Extracting %s...            ' % name)
-   with zipfile.ZipFile (os.path.join (PATH_TOOLCHAIN, name), 'r') as zip_ref:
-      zip_ref.extractall (PATH_TOOLCHAIN)
-
+      print ('Extracting %s...            ' % name)
+      with zipfile.ZipFile (os.path.join (PATH_TOOLCHAIN, name), 'r') as zip_ref:
+         zip_ref.extractall (PATH_TOOLCHAIN)
+   else:
+      print ('ARM Embedded toolchain already downloaded...skipping')
 
 
 """
@@ -494,14 +503,15 @@ Name: install_python_requirements
 """
 
 def install_python_requirements ():
-   os.makedirs (PATH_PY3_PACKAGES)
+   # if not os.path.exists(PATH_PY3_PACKAGES):
+   #   os.makedirs (PATH_PY3_PACKAGES)
 
    print ('Installing python packages...')
 
    # Start by installing a version of pip after 22.2. This version introduces
    # the 'universal2' that some our dependencies, like freetype-py, depends
    # on, in order to install the wheel we need.
-
+   '''
    subprocess.check_call (
       [
          sys.executable,
@@ -514,12 +524,12 @@ def install_python_requirements ():
          'pip==23.1.2',
       ]
    )
-
+   '''
    # pip install --target does not support well shared namespaces. Here with
    # the bin/ folder which is used for `pip` binaries, which we don't use
    # so remove that folder before installing requirements.
 
-   shutil.rmtree (os.path.join (PATH_PY3_PACKAGES, 'bin'))
+   #shutil.rmtree (os.path.join (PATH_PY3_PACKAGES, 'bin'))
 
    subprocess.check_call (
       [
@@ -528,7 +538,7 @@ def install_python_requirements ():
          '--quiet', '--quiet', '--quiet',
          '--disable-pip-version-check',
          '--log', os.path.join (PATH_TOOLCHAIN, 'pip-install-reqs.log.txt'),
-         '--target', PATH_PY3_PACKAGES,
+        # '--target', PATH_PY3_PACKAGES,
          '--no-user',
          '--report', os.path.join (PATH_TOOLCHAIN, 'pip-report.json'),
          '--requirement', os.path.join (PATH_ROOT, 'requirements.txt'),

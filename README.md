@@ -1,3 +1,24 @@
+# Patched eurorack-blocks for MinGW
+
+This repository allows you to setup the `erbb` toolchain in MingGW.
+
+As for today it has been tested only to run simulation on VCVRack and it DOES have some system dependencies, i.e. deleting the eurorack-folder will not actually delete everything.
+
+These dependecies are:
+
+
+
+### Change log
+- `pip` should be already installed in your sistem
+- the `python3-packages` should be installed system-wide
+- `freetype-py` should be installed system wide 
+- `numpy` should be installed system-wide
+- `freetype-py` should be installed system-wide
+- the `toolchain` is now <i>"cached"</i>, i.e. running `erbb setup` multiple time will not delete the toolchain folder and it will not download the tools if already downloaded, although it shouldn't be necessary to run `erbb setup` more than once 
+- the system-wide installation of `make` is used not sure if necessary though...
+- in `make.py` the `Makefile` template uses the vcv-rack-sdk submodule even if a `RACK_DIR` is defined in the environment
+
+
 # eurorack-blocks
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
