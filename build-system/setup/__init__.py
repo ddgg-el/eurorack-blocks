@@ -542,8 +542,8 @@ def install_python_requirements ():
          '--no-user',
          '--report', os.path.join (PATH_TOOLCHAIN, 'pip-report.json'),
          '--requirement', os.path.join (PATH_ROOT, 'requirements.txt'),
-      ],
-      cwd=PATH_PY3_PACKAGES
+      ]
+      # cwd=PATH_PY3_PACKAGES
    )
 
 

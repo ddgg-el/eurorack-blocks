@@ -5,15 +5,17 @@ This repository allows you to setup the `erbb` toolchain in MingGW.
 As for today it has been tested only to run simulation on VCVRack and it DOES have some system dependencies, i.e. deleting the eurorack-block folder will not actually delete everything.
 
 These dependecies are:
+- `mingw-w64-x86_64-python-pillow`
+- `mingw-w64-x86_64-python-freetype-py` 
+- `mingw-w64-x86_64-python-numpy`
+- `mingw-w64-x86_64-python-soundfile`
 
-
+If any of these dependencies has already been installed via `pip`, my suggestion would be to unistall them to avoid potential conflicts 
 
 ### Change log
 - `pip` should be already installed in your sistem
-- the `python3-packages` should be installed system-wide
-- `freetype-py` should be installed system wide 
-- `numpy` should be installed system-wide
-- `freetype-py` should be installed system-wide
+- `freetype-py` `SoundFile`, `numpy` should be installed system-wide
+- all `python` dependecies will be installed system-wide 
 - the `toolchain` is now <i>"cached"</i>, i.e. running `erbb setup` multiple time will not delete the toolchain folder and it will not download the tools if already downloaded, although it shouldn't be necessary to run `erbb setup` more than once 
 - the system-wide installation of `make` is used not sure if necessary though...
 - in `make.py` the `Makefile` template uses the vcv-rack-sdk submodule even if a `RACK_DIR` is defined in the environment
