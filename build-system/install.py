@@ -13,6 +13,7 @@ import os
 import platform
 import sys
 import subprocess
+import sysconfig
 
 PATH_THIS = os.path.abspath (os.path.dirname (__file__))
 
@@ -41,7 +42,13 @@ if __name__ == '__main__':
          shell = os.environ ['SHELL']
 
          if 'bash' in shell:
-            profile_path = os.path.join (os.path.expanduser ('~'), '.bash_profile')
+            if 'mingw' in sysconfig.get_platform():
+               home_path = os.getenv('HOME')
+               home_path = home_path.replace('\\', '/')
+               profile_path = os.path.join(home_path, '.bash_profile')
+            else:
+               profile_path = os.path.join (os.path.expanduser ('~'), '.bash_profile')
+            print(profile_path)
 
          elif 'zsh' in shell:
             profile_path = os.path.join (os.path.expanduser ('~'), '.zshrc')

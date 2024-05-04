@@ -48,3 +48,5 @@ project_daisy.gyp
 # Sphinx
 
 _build/
+
+prove/
